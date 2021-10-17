@@ -3,16 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const db = require('./models');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const { Sequelize } = require('./models');
-
+const db = require('./models');
+let sequelize = db.sequelize;
 var app = express();
 
 
-//Test connection (code snippet from https://sequelize.org/master/manual/getting-started.html), and syncs database.
+//Tests connection and syncs database. (code snippet from https://sequelize.org/master/manual/getting-started.html).
 try {
   db.sequelize.authenticate();
   console.log('Connection has been established successfully.');
@@ -34,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
