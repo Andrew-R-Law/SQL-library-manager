@@ -11,7 +11,12 @@ let sequelize = db.sequelize;
 var app = express();
 
 
-//Tests connection and syncs database. (code snippet from https://sequelize.org/master/manual/getting-started.html).
+/*Tests connection and syncs database. 
+
+    *****Delete or comment out the following try block to make changes to database permanent.*****
+
+(code snippet from https://sequelize.org/master/manual/getting-started.html).*/
+
 try {
   db.sequelize.authenticate();
   console.log('Connection has been established successfully.');
@@ -33,21 +38,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
 
 module.exports = app;
